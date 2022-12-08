@@ -3,6 +3,7 @@ package org.example;
 import lombok.Builder;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 public class Estudante {
@@ -39,14 +40,23 @@ public class Estudante {
         matricula = String.valueOf(nome.charAt(0)) + LocalDate.now().getYear();
         return matricula;
     }
-    public static Boolean cadastrarEstudante( List<Estudante> listDeEstudante, Estudante estudante){
+    public static boolean cadastrarEstudante( List<Estudante> listDeEstudante, Estudante estudante){
         if (estudante.celularList == null ||estudante.nome == null || estudante.matricula == null
         || estudante.dataNascimento == null || estudante.endereco == null || estudante.emailInstitucional == null){
-            return false;
+           throw new IllegalArgumentException("Os campos precisam ser preenchidos!");
         }
+
+        isMaiorQueQuinzeAnos(estudante);
         return listDeEstudante.add(estudante);
     }
 
+    public static boolean isMaiorQueQuinzeAnos(Estudante estudante){
+        final Period period = Period.between(LocalDate.parse(estudante.dataNascimento), LocalDate.now());
+        if (period.getYears() >= 15){
+            return true;
+        }
+        throw new IllegalArgumentException("Estudante têm que ter mais de 15 anos");
+    }
 
     @Override
     public String toString() {

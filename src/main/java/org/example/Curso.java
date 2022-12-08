@@ -15,7 +15,7 @@ public class Curso {
 
     public Boolean cadastrarCurso(List<Curso> listaDeCursos,  Curso curso){
         if (curso.nome == null || curso.cargaHorario == null || curso.descricao == null){
-            return false;
+            throw new IllegalArgumentException("Os campos precisam ser preenchidos!");
         }
         return listaDeCursos.add(curso);
     }

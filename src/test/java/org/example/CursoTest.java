@@ -27,8 +27,9 @@ class CursoTest {
         Assertions.assertEquals(true, cursoValido.cadastrarCurso(cursoList, cursoValido));
     }
     @Test
-    void falseAocadastrarCursoComValoresFaltando() {
-        Assertions.assertEquals(false, cursoInvalido.cadastrarCurso(cursoList, cursoInvalido));
+    void throwExceptionAocadastrarCursoComValoresFaltando() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> cursoInvalido.cadastrarCurso(cursoList, cursoInvalido), "Os campos precisam ser preenchidos!");
     }
 
 }//class test
